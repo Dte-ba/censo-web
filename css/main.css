@@ -23,7 +23,7 @@ height: 100%;
 /* Set the fixed height of the footer here */
 #push,
 footer {
-    height: 60px;
+    height: 58px;
 }
 
 footer {
@@ -38,14 +38,14 @@ footer {
 .footer-dte-logo {
     float: left;
     width: 268px;
-    height: 60px;
+    height: 58px;
     background: url('../img/footer-dte-logo.png');
 }
 
 .footer-ba-logo {
     float: right;
     width: 202px;
-    height: 60px;
+    height: 58px;
     background: url('../img/footer-ba-logo.png');    
 }
 
@@ -59,6 +59,18 @@ footer {
 
 #cue-form {
     padding-top: 50px;
+}
+
+.link-files a {
+    text-decoration: none;
+}
+
+.link-files a i {
+    visibility: hidden;  
+}
+
+.link-files a:hover i {
+    visibility: visible;
 }
 
 /* ==========================================================================

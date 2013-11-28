@@ -28,8 +28,19 @@
             
         <div class="wrap container">
             <div class="page-header">
-                <h1>Censo Nacional  <a id="logo-head"></a></h1>
+                <a href="http://www.conectarigualdad.gob.ar/" target="_blank" id="logo-head"></a>
+                <h1>Censo Nacional</h1>
             </div>
+
+            <ul class="breadcrumb link-files" data-bind="foreach: files">
+              <li>
+                <a target="_blank" data-bind="attr: { id: id, href: link, title: title }">
+                    <span data-bind="text: caption"></span> <i class="icon-download"></i>
+                </a>
+              </li>
+            </ul>
+            <small>Es ideal que descargue y lea estos archivos para lograr dimensionar el tipo de preguntas que el censo aplica.</small>
+            <hr>
 
             <div id="cue-form" data-bind="visible: !pageLoading()" style="display: none;">
                 <div class="form-group">
@@ -50,31 +61,48 @@
             <div class="loader" data-bind="visible: (isLoading() || pageLoading())">
               <i class="icon-spinner icon-2x icon-spin active"></i>
             </div>
+            
+            <div class="alert alert-danger" data-bind="visible: notFinded()" style="display: none">
+                <strong>CUE no encontrado</strong><br>
+                <p>Comuníquese con el coordinador regional, puede que su escuela no haya sido elegida para realizar el censo.</p>
+            </div>
+
+            <div class="alert alert-danger" data-bind="visible: cueError()" style="display: none">
+                <p>El CUE ingresado es incorrecto</p>
+            </div>
 
             <div data-bind="with: result, visible: hasResult()" style="display: none">
-                <p>
-                    <strong>CUE :</strong>
-                    <span data-bind="text: cue"></span>
-                </p>
-                <p>
-                    <strong>Localidad :</strong>
-                    <span data-bind="text: localidad"></span>
-                </p>
-                <p>
-                    <strong>Departamento :</strong>
-                    <span data-bind="text: departamento"></span>
-                </p>
-                <p>
-                    <strong>Nombre :</strong>
-                    <span data-bind="text: school_name"></span>
-                </p>
+                
+                
+
+                <dl class="dl-horizontal">
+                  <dt>CUE:</dt>
+                  <dd data-bind="text: cue"></dd>
+
+                  <dt>Localidad:</dt>
+                  <dd data-bind="text: localidad"></dd>
+
+                  <dt>Departamento:</dt>
+                  <dd data-bind="text: departamento"></dd>
+
+                  <dt>Calle:</dt>
+                  <dd data-bind="text: calle"></dd>
+
+                  <dt>Nombre:</dt>
+                  <dd data-bind="text: school_name"></dd>
+                </dl>
+                
+                <div class="alert alert-warning">
+                    <p><strong><i class="icon-warning-sign"></i> ATENCIÓN</strong></p>
+                    <p>Recuerde que una vez que ingrese al siguiente Link y comience el censo éste no podrá ser modificado luego de guardar la información.</p>
+                </div>
+
                 <div class="well well-sm">
                     <p><strong>Ingreso de datos: </strong></p>
                     <button data-bind="click: $parent.clickLink" class="btn btn-primary btn-lg">Ir al formulario</button>
                     <p data-bind="visible: $parent.wrongLink()"><small>Si el link no funciona haga click <a data-bind="attr: { href: link}" target="_blank">Aquí</a></small></p>
                 </div>
             </div>
-
           <div id="push"></div>
 
         </div>
@@ -97,10 +125,13 @@
         <script src="js/main.js"></script>
 
         <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-45867786-1', 'nticx.net');
+          ga('send', 'pageview');
         </script>
     </body>
 </html>

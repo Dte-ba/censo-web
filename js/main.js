@@ -4,6 +4,37 @@
 
   var cueRegex = /^0[0-9]{8}$/;
 
+  var files = [
+    {
+      id: 'to-guia',
+      link: 'files/Documento_censo_Bs_AS.docx',
+      title: 'Guía',
+      caption: 'Guía ',
+      popover: '<strong>¿Qué es?</strong> <br> <br> <p>Descargando este archivo encontrará una guía clara y concisa que le mostrará los distintos formularios que contempla el CENSO.</p>'
+    },
+    /*{
+      id: 'to-ett',
+      link: 'files/ENTREVISTA_SEGUIMIENTO_ETT.pdf',
+      title: 'Entrevista Seguimiento ETT',
+      caption: 'Entrevista Seguimiento ETT ',
+      popover: 'Descargando este archivo en formato PDF podrá monitorear las preguntas referidas al censo.'
+    },*/
+    {
+      id: 'to-form',
+      link: 'files/ENTREVISTA_SEGUIMIENTO_ETT.pdf',
+      title: 'Formulario v2',
+      caption: 'Formulario v2 ',
+      popover: 'Descargando este archivo en formato PDF encontrará las preguntas referidas al censo.'
+    },
+    {
+      id: 'to-pres',
+      link: 'files/PRESENTACION_RELEVAMIENTO_TECNICO_Bs_As.pptx',
+      title: 'Presentación',
+      caption: 'Presentación',
+      popover: 'Descargando este archivo Ud. se encontrará con una presentación realizada en Power Point con toda la información necesaria para realizar el Censo y una presentación de cuál es la intensión que tenemos en convocarlo a este censo Nacional. Recomendamos ampliamente que descargar este y lo recorra de manera completa.'
+    }
+  ];
+
   var vm = {
     pageLoading: ko.observable(true),
     isLoading: ko.observable(true),
@@ -11,7 +42,10 @@
     cue: ko.observable(),
     hasResult: ko.observable(false),
     result: ko.observable(null),
-    wrongLink: ko.observable(false)
+    wrongLink: ko.observable(false),
+    notFinded: ko.observable(false),
+    cueError: ko.observable(false),
+    files: ko.observableArray(files)
   };
 
   vm.canSearch = ko.computed(function(){
@@ -28,10 +62,18 @@
   }, vm);
 
   vm.search = function(item, event) {
+
+    if (!cueRegex.test(vm.cue().toString())) {
+      vm.cueError(true);
+      return false;
+    }
+
     var finded = findSchool(vm.cue().toString(), vm.data());
 
     if (finded == undefined) {
       vm.hasResult(false);
+      vm.notFinded(true);
+      vm.cueError(false);
       vm.result(null);
       return false;
     }
@@ -59,11 +101,25 @@
     vm.hasResult(false);
     vm.result(null);
     vm.wrongLink(false);
+    vm.notFinded(false);
+    vm.cueError(false);
   });
 
   // initialize
   $(function(){
     ko.applyBindings(vm);
+
+    _.forEach(files, function(f) {
+
+      $('#' + f.id).popover({ 
+                  html: true,
+                  trigger: 'hover',
+                  content: f.popover,
+                  placement: 'bottom',
+                  delay: { show: 200, hide: 100 }
+                });  
+    });
+
   });
 
   loadData();
